@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-3">Пользователи</h4>
+<table class="table table-hover">
+  <thead class="table-dark">
+    <tr><th>#</th><th>Логин</th><th>Имя</th><th>Роль</th><th>Изменить роль</th></tr>
+  </thead>
+  <tbody>
+    {% for u in users %}
+    <tr>
+      <td>{{ u.id }}</td>
+      <td>{{ u.username }}</td>
+      <td>{{ u.name or '—' }}</td>
+      <td><span class="badge bg-secondary">{{ u.role }}</span></td>
+      <td>
+        <form method="post" action="/users/{{ u.id }}/role" class="d-flex gap-1">
+          <select class="form-select form-select-sm" name="role" style="width:120px;">
+            <option value="employee" {% if u.role=='employee' %}selected{% endif %}>employee</option>
+            <option value="manager"  {% if u.role=='manager'  %}selected{% endif %}>manager</option>
+            <option value="admin"    {% if u.role=='admin'    %}selected{% endif %}>admin</option>
+          </select>
+          <button class="btn btn-sm btn-outline-primary">OK</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

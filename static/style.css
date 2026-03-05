@@ -1,0 +1,40 @@
+body {
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+.sidebar {
+    width: 200px;
+    min-height: calc(100vh - 56px);
+    background: #212529;
+    flex-shrink: 0;
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.sidebar .nav-link.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.card {
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    background: white;
+}
+
+table {
+    background: white;
+}

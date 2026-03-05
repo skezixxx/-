@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4>Задачи</h4>
+  <a href="/tasks/new" class="btn btn-primary">+ Новая задача</a>
+</div>
+<div class="mb-3">
+  <a href="/tasks" class="btn btn-sm {% if sort != 'deadline' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">По умолчанию</a>
+  <a href="/tasks?sort=deadline" class="btn btn-sm {% if sort == 'deadline' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">По дедлайну</a>
+</div>
+{% if tasks %}
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Название</th>
+        <th>Исполнитель</th>
+        <th>Статус</th>
+        <th>Этап</th>
+        <th>Дедлайн</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+      <tr>
+        <td>{{ task.id }}</td>
+        <td><a href="/tasks/{{ task.id }}" class="text-decoration-none">{{ task.title }}</a></td>
+        <td>{{ task.assignee_name or '—' }}</td>
+        <td>
+          {% if task.status == 'новая' %}
+            <span class="badge bg-secondary">{{ task.status }}</span>
+          {% elif task.status == 'в работе' %}
+            <span class="badge bg-warning text-dark">{{ task.status }}</span>
+          {% else %}
+            <span class="badge bg-success">{{ task.status }}</span>
+          {% endif %}
+        </td>
+        <td><span class="badge bg-info text-dark">{{ task.stage }}</span></td>
+        <td>{{ task.deadline or '—' }}</td>
+        <td><a href="/tasks/{{ task.id }}" class="btn btn-sm btn-outline-secondary">Открыть</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="alert alert-info">Задач пока нет</div>
+{% endif %}
+{% endblock %}

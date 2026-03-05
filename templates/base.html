@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Задачи</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3">
+  <a class="navbar-brand" href="/tasks">📋 Задачи</a>
+  {% if session.get('user_id') %}
+  <div class="d-flex align-items-center gap-3">
+    <a href="/notifications" class="text-white text-decoration-none">
+      🔔{% if unread > 0 %}<span class="badge bg-danger">{{ unread }}</span>{% endif %}
+    </a>
+    <span class="text-white-50">{{ session.get('name') or session.get('username') }}</span>
+    <a href="/logout" class="btn btn-outline-light btn-sm">Выйти</a>
+  </div>
+  {% endif %}
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="container mt-3">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endwith %}
+<div class="d-flex">
+  {% if session.get('user_id') %}
+  <nav class="sidebar p-3">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/tasks' %}active{% endif %}" href="/tasks">📝 Задачи</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/tasks/new' %}active{% endif %}" href="/tasks/new">➕ Новая задача</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/archive' %}active{% endif %}" href="/archive">📦 Архив</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/notifications' %}active{% endif %}" href="/notifications">🔔 Уведомления</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/activity' %}active{% endif %}" href="/activity">📋 Активность</a>
+      </li>
+      {% if session.get('role') == 'admin' %}
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/users' %}active{% endif %}" href="/users">👥 Пользователи</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+  <main class="flex-grow-1 p-4">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

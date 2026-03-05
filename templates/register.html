@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-4">
+    <div class="card p-4">
+      <h4 class="mb-3">Регистрация</h4>
+      <form method="post">
+        <div class="mb-3">
+          <input class="form-control" name="username" placeholder="Логин" required>
+        </div>
+        <div class="mb-3">
+          <input class="form-control" type="password" name="password" placeholder="Пароль" required>
+        </div>
+        <div class="mb-3">
+          <input class="form-control" name="name" placeholder="Ваше имя">
+        </div>
+        <button class="btn btn-primary w-100">Создать аккаунт</button>
+      </form>
+      <hr>
+      <a href="/login" class="btn btn-outline-secondary w-100">Уже есть аккаунт</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

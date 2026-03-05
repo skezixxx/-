@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-3">Уведомления</h4>
+{% if notifications %}
+  {% for n in notifications %}
+  <div class="card p-3 mb-2 {% if not n.is_read %}border-primary{% endif %}">
+    <div class="d-flex justify-content-between">
+      <span>{{ n.text }}</span>
+      <small class="text-muted">{{ n.created_at }}</small>
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+<div class="alert alert-info">Уведомлений нет</div>
+{% endif %}
+{% endblock %}
