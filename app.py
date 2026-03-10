@@ -4,8 +4,6 @@ import sqlite3
 import datetime
 import os
 
-# Пароли для начальной инициализации БД.
-# Для продакшена задайте переменные окружения ADMIN_PASSWORD и USER1_PASSWORD.
 DEFAULT_ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
 DEFAULT_USER1_PASSWORD = os.environ.get('USER1_PASSWORD', 'user123')
 
@@ -31,9 +29,6 @@ def get_db():
 
 def init_db():
     conn = get_db()
-    # executescript() выполняет неявный COMMIT перед запуском и сбрасывает PRAGMA,
-    # поэтому схему создаём через него, а вставку начальных данных — отдельно,
-    # уже после того как соединение снова получило PRAGMA foreign_keys = ON.
     conn.executescript("""
         CREATE TABLE IF NOT EXISTS users (
             id       INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -90,8 +85,7 @@ def init_db():
         );
     """)
     conn.close()
-
-    # Открываем новое соединение — теперь PRAGMA foreign_keys = ON активна корректно
+    
     conn = get_db()
     conn.execute(
         "INSERT OR IGNORE INTO users(username, password, role, name) VALUES (?,?,?,?)",
