@@ -8,7 +8,7 @@ DEFAULT_ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
 DEFAULT_USER1_PASSWORD = os.environ.get('USER1_PASSWORD', 'user123')
 
 app = Flask(__name__)
-app.secret_key = 'my_secret_key_123'
+app.secret_key = 'yandexlyceum_secret_key'
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB = os.path.join(BASE_DIR, 'tasks.db')
